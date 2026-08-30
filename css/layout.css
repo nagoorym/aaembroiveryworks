@@ -419,3 +419,12 @@ footer{background:#fff;padding:55px 0;border-top:1px solid var(--line)}
 @media (max-width:800px){
   .hero-media{aspect-ratio:4/5;}
 }
+
+
+/* Simplified header: logo + WhatsApp only */
+.nav{display:flex!important;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;text-align:left;line-height:1;flex:0 0 auto;}
+.brand>a{display:flex;align-items:center;}
+.brand .site-logo{width:auto;height:52px;max-width:260px;display:block;}
+.nav-cta{display:inline-flex!important;align-items:center;justify-content:center;white-space:nowrap;}
+@media(max-width:800px){.nav{height:72px!important;}.brand .site-logo{height:40px;max-width:185px;}.nav-cta{padding:10px 13px;font-size:.62rem;}}
