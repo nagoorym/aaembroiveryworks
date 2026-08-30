@@ -19,13 +19,13 @@ function openImage(index){lightboxIndex=index;const img=lightbox.querySelector("
 function move(dir){if(!currentImages.length)return;lightboxIndex=(lightboxIndex+dir+currentImages.length)%currentImages.length;openImage(lightboxIndex)}
 lightbox.querySelector(".lightbox-prev").onclick=()=>move(-1);
 lightbox.querySelector(".lightbox-next").onclick=()=>move(1);
-function render(category=activeCategory,page=1){
+function scrollGalleryToTop(){\n const section=document.getElementById("our-work");\n if(section)section.scrollIntoView({behavior:"smooth",block:"start"});\n}\nfunction render(category=activeCategory,page=1){
  activeCategory=category;currentPage=page;
  currentImages=siteImages[map[category]]?.items||[];
  const pages=Math.max(1,Math.ceil(currentImages.length/PAGE_SIZE)),safe=Math.min(page,pages),start=(safe-1)*PAGE_SIZE,visible=currentImages.slice(start,start+PAGE_SIZE);
  document.querySelectorAll(".gallery-pagination").forEach(x=>x.remove());grid.innerHTML="";
  if(!visible.length){grid.innerHTML='<div class="gallery-empty"><strong>Collection coming soon.</strong><span>We are curating this collection.</span></div>';return}
  visible.forEach((src,i)=>{const index=start+i;const item=document.createElement("button");item.type="button";item.className="google-gallery-item";item.innerHTML='<img src="'+src+'" loading="lazy" alt="AA Embroidery Work gallery image"><span class="gallery-view">View</span>';item.onclick=()=>openImage(index);grid.appendChild(item)});
- if(pages>1){const nav=document.createElement("div");nav.className="gallery-pagination";nav.innerHTML=Array.from({length:pages},(_,i)=>'<button class="'+(i+1===safe?'active':'')+'" data-p="'+(i+1)+'">'+(i+1)+'</button>').join("");nav.querySelectorAll("button").forEach(b=>b.onclick=()=>render(activeCategory,+b.dataset.p));grid.after(nav)}
+ if(pages>1){const nav=document.createElement("div");nav.className="gallery-pagination";nav.innerHTML=Array.from({length:pages},(_,i)=>'<button class="'+(i+1===safe?'active':'')+'" data-p="'+(i+1)+'">'+(i+1)+'</button>').join("");nav.querySelectorAll("button").forEach(b=>b.onclick=()=>{render(activeCategory,+b.dataset.p);scrollGalleryToTop()});grid.after(nav)}
 }
 tabs.forEach(tab=>tab.addEventListener("click",()=>{tabs.forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false")});tab.classList.add("active");tab.setAttribute("aria-selected","true");render(tab.dataset.galleryCategory,1)}));render();
