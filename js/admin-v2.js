@@ -9,7 +9,26 @@ galleryLogos:{title:'Gallery · Logos & Uniforms',size:'1200 × 1200 px · 1:1',
 galleryCustom:{title:'Gallery · Custom Embroidery',size:'1200 × 1200 px · 1:1',square:true,items:[]},
 galleryPrints:{title:'Gallery · T-Shirt Prints',size:'1200 × 1200 px · 1:1',square:true,items:[]}
 };
-let data=JSON.parse(localStorage.getItem('aa-complete-image-manager')||'null')||structuredClone(defaults);
+let data;
+try{
+  const saved=JSON.parse(localStorage.getItem('aa-complete-image-manager')||'null');
+  data=structuredClone(defaults);
+  if(saved){
+    for(const key of Object.keys(defaults)){
+      if(saved[key]){
+        // Keep current website images as the baseline. Only preserve saved gallery additions.
+        if(key.startsWith('gallery')){
+          const base=defaults[key].items;
+          const extra=(saved[key].items||[]).filter(url=>!base.includes(url));
+          data[key].items=[...base,...extra];
+        }else if(Array.isArray(saved[key].items)){
+          data[key].items=saved[key].items;
+        }
+      }
+    }
+  }
+}catch(e){data=structuredClone(defaults)}
+save();
 let galleryPages={};
 const root=document.querySelector('#sections');
 function save(){localStorage.setItem('aa-complete-image-manager',JSON.stringify(data))}
