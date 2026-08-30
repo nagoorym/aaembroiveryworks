@@ -48,5 +48,17 @@ function render(){
  root.querySelectorAll('[data-add]').forEach(btn=>btn.onclick=()=>{const k=btn.dataset.add,u=document.querySelector('#add-'+k).value.trim();if(!u)return;data[k].items.push(u);galleryPages[k]=Math.ceil(data[k].items.length/PAGE_SIZE);save();render();});
  root.querySelectorAll('[data-page]').forEach(btn=>btn.onclick=()=>{galleryPages[btn.dataset.page]=+btn.dataset.p;render();});
 }
+const resetBtn=document.createElement('button');
+resetBtn.className='export';
+resetBtn.style.margin='16px auto 0';
+resetBtn.textContent='Reset to Current Website Images';
+document.querySelector('#exportBtn').before(resetBtn);
+resetBtn.onclick=()=>{
+  if(!confirm('Reset all image data to the current website defaults? Your locally added or replaced URLs in this browser will be cleared.')) return;
+  localStorage.removeItem('aa-complete-image-manager');
+  data=structuredClone(defaults);
+  save();
+  render();
+};
 document.querySelector('#exportBtn').onclick=()=>{const content='export const siteImages = '+JSON.stringify(data,null,2)+';\n';const b=new Blob([content],{type:'text/javascript'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='site-images.js';a.click();URL.revokeObjectURL(a.href)};
 render();
