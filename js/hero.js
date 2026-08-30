@@ -1,92 +1,60 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const track = document.querySelector("#hero-track");
-  const dots = document.querySelector(".hero-media .slider-dots");
-  const hero = document.querySelector(".hero");
-  if (!track || !dots) return;
+(() => {
+  function initHero() {
+    const track = document.getElementById("hero-track");
+    const media = document.querySelector(".hero-media");
+    const dots = document.querySelector(".hero-media .slider-dots");
+    const prevBtn = document.querySelector(".hero-arrow.prev");
+    const nextBtn = document.querySelector(".hero-arrow.next");
+    if (!track || !media || !dots) return;
 
-  // Get slides from the actual DOM
-  const slides = document.querySelectorAll(".hero-slide");
-  const slideCount = slides.length;
-  if (slideCount === 0) return;
+    const slides = Array.from(track.querySelectorAll(".hero-slide"));
+    if (slides.length < 2) return;
 
-  let current = 0;
-  let timer = null;
-  const AUTOPLAY_MS = 2000;
+    let current = 0;
+    let timer;
+    const AUTOPLAY_MS = 2000;
 
-  // Preload all images.
-  slides.forEach(slide => {
-    const img = slide.querySelector("img");
-    if (img) {
-      const preload = new Image();
-      preload.src = img.src;
+    dots.innerHTML = "";
+    slides.forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("aria-label", "Show hero image " + (i + 1));
+      dot.addEventListener("click", () => {
+        goTo(i);
+        restart();
+      });
+      dots.appendChild(dot);
+    });
+
+    function goTo(index) {
+      current = (index + slides.length) % slides.length;
+      track.style.transform = "translateX(-" + (current * 100) + "%)";
+      Array.from(dots.children).forEach((dot, i) => dot.classList.toggle("active", i === current));
     }
-  });
 
-  // Create dots for each slide
-  slides.forEach((_, i) => {
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.setAttribute("aria-label", `Show hero image ${i + 1}`);
-    dot.className = i === 0 ? "active" : "";
-    dot.addEventListener("click", () => {
-      goTo(i);
-      restart();
-    });
-    dots.appendChild(dot);
-  });
-
-  function goTo(index) {
-    current = (index + slides.length) % slides.length;
-    track.style.transform = `translate3d(-${current * 100}%, 0, 0)`;
-    [...dots.children].forEach((dot, i) => {
-      dot.classList.toggle("active", i === current);
-    });
-  }
-
-  function next() {
-    goTo(current + 1);
-  }
-
-  function previous() {
-    goTo(current - 1);
-  }
-
-  function stop() {
-    if (timer) {
+    function start() {
       clearInterval(timer);
-      timer = null;
+      timer = setInterval(() => goTo(current + 1), AUTOPLAY_MS);
     }
-  }
 
-  function start() {
-    stop();
-    timer = window.setInterval(next, AUTOPLAY_MS);
-  }
+    function restart() { start(); }
 
-  function restart() {
+    prevBtn?.addEventListener("click", () => { goTo(current - 1); restart(); });
+    nextBtn?.addEventListener("click", () => { goTo(current + 1); restart(); });
+
+    // Keep automatic scrolling active continuously at a 2-second interval.
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) clearInterval(timer);
+      else start();
+    });
+
+    goTo(0);
     start();
   }
 
-  document.querySelector(".hero-arrow.prev")?.addEventListener("click", () => {
-    previous();
-    restart();
-  });
-
-  document.querySelector(".hero-arrow.next")?.addEventListener("click", () => {
-    next();
-    restart();
-  });
-
-  // Pause while the pointer is over the hero, then resume.
-  hero?.addEventListener("mouseenter", stop);
-  hero?.addEventListener("mouseleave", start);
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stop();
-    else start();
-  });
-
-  // Start immediately; first movement occurs exactly 2 seconds later.
-  goTo(0);
-  start();
-});
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHero, { once: true });
+  } else {
+    initHero();
+  }
+})();
