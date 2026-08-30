@@ -19,7 +19,11 @@ function openImage(index){lightboxIndex=index;const img=lightbox.querySelector("
 function move(dir){if(!currentImages.length)return;lightboxIndex=(lightboxIndex+dir+currentImages.length)%currentImages.length;openImage(lightboxIndex)}
 lightbox.querySelector(".lightbox-prev").onclick=()=>move(-1);
 lightbox.querySelector(".lightbox-next").onclick=()=>move(1);
-function scrollGalleryToTop(){\n const section=document.getElementById("our-work");\n if(section)section.scrollIntoView({behavior:"smooth",block:"start"});\n}\nfunction render(category=activeCategory,page=1){
+function scrollGalleryToTop(){
+ const section=document.getElementById("our-work");
+ if(section)section.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function render(category=activeCategory,page=1){
  activeCategory=category;currentPage=page;
  currentImages=siteImages[map[category]]?.items||[];
  const pages=Math.max(1,Math.ceil(currentImages.length/PAGE_SIZE)),safe=Math.min(page,pages),start=(safe-1)*PAGE_SIZE,visible=currentImages.slice(start,start+PAGE_SIZE);
