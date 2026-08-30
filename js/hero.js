@@ -2,10 +2,10 @@
   function initHero() {
     const track = document.getElementById("hero-track");
     const media = document.querySelector(".hero-media");
-    const dots = document.querySelector(".hero-media .slider-dots");
+    const dots = document.querySelector(".slider-dots");
     const prevBtn = document.querySelector(".hero-arrow.prev");
     const nextBtn = document.querySelector(".hero-arrow.next");
-    if (!track || !media || !dots) return;
+    if (!track || !dots) return;
 
     const slides = Array.from(track.querySelectorAll(".hero-slide"));
     if (slides.length < 2) return;
