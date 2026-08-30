@@ -1,0 +1,29 @@
+button{font:inherit}.card-copy p{max-width:48ch}.ratio{background:#ddd}
+
+/* Compact editorial image sizing */
+.service-grid .service-card:not(.feature) .ratio{aspect-ratio:4/3}
+.service-grid .service-card.feature .ratio{aspect-ratio:16/6}
+
+/* Service image source specification: 1200x1500 / 4:5 */
+.service-tile-page .ratio{aspect-ratio:4/5!important}
+.service-tile-page .ratio img{object-fit:cover}
+
+/* AA Embroidery Work official logo */
+.site-logo{
+  display:block;
+  width:auto;
+  height:44px;
+  max-width:180px;
+  object-fit:contain;
+}
+@media(max-width:800px){
+  .site-logo{
+    height:38px;
+    max-width:155px;
+  }
+}
+
+/* Single-page mode: Home is the only navigation item. */
+.navlinks a:not(:first-child){display:none!important}
+.navlinks{display:flex;align-items:center;gap:18px}
+.single-page-home-cta{display:inline-flex!important}

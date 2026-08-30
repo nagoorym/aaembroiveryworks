@@ -1,0 +1,22 @@
+AA EMBROIDERY WORK — IMAGE SPECS
+
+HERO
+Recommended master/source size: 1600 x 900 px
+Ratio: 16:9
+Hero images should be composed to the full 16:9 frame.
+Hero carousel: 6 images, horizontal slide transition, 2-second autoplay interval.
+Avoid important embroidery/details near the extreme edges.
+
+SERVICES
+Recommended master/source size: 1200 x 1500 px
+Ratio: 4:5
+
+WHATEVER YOUR FASHION
+Recommended master/source size: 1200 x 1500 px
+Ratio: 4:5
+
+Use the exact ratios above when preparing replacement images to avoid unexpected cropping.
+
+
+OFFICIAL LOGO
+AA Embroidery Work logo: https://ik.imagekit.io/MiCV/AA%20logo.svg

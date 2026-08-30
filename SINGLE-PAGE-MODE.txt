@@ -1,0 +1,4 @@
+AA Embroidery Work is configured as a single-page public website.
+Only index.html is active.
+Primary customer CTAs route to WhatsApp: +91 96262 02662.
+Other page HTML files were removed from the public build.
