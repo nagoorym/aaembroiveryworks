@@ -582,3 +582,20 @@ footer{background:#fff;padding:55px 0;border-top:1px solid var(--line)}
     padding-top:42px!important;
   }
 }
+
+
+/* Center Promise icons on all screen sizes */
+.promise-item{
+  text-align:center;
+}
+.promise-icon{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.promise-icon img{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
