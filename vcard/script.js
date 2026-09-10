@@ -1,0 +1,5 @@
+const BUSINESS={name:'AA Embroidery Works',phone:'+91 9626202662',email:'aaembroideryjob@gmail.com',address:'7A, Kennady St, MG Nagar, Tharamani, Chennai - 600113',website:'https://aaworks.in/'};
+function esc(v){return v.replace(/([\\;,])/g,'\\$1').replace(/\r?\n/g,'\\n')}
+function vcard(){return ['BEGIN:VCARD','VERSION:3.0',`FN:${esc(BUSINESS.name)}`,`ORG:${esc(BUSINESS.name)}`,`TEL;TYPE=WORK,VOICE:${BUSINESS.phone}`,`EMAIL;TYPE=WORK:${BUSINESS.email}`,`ADR;TYPE=WORK:;;${esc(BUSINESS.address)};;;;`,`URL:${BUSINESS.website}`,'END:VCARD'].join('\r\n')}
+document.getElementById('saveContact').addEventListener('click',()=>{const blob=new Blob([vcard()],{type:'text/vcard;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='AA-Embroidery-Works.vcf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);const text=document.getElementById('saveText');text.textContent='Saved!';setTimeout(()=>text.textContent='Save to Contacts',2500)});
+document.querySelectorAll('.social.inactive').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
